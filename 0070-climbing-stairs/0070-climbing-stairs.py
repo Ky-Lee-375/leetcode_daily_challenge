@@ -1,7 +1,7 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        # if (n <= 2):
-        #     return n
+        if (n <= 2):
+            return n
         fibo = {}
         
         fibo[1] = 1
