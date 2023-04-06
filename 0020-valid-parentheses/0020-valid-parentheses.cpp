@@ -5,6 +5,7 @@ class Solution {
     // map<char, char> map = {{'(', ')'}, {'[', ']'}, {'{', '}'}};
 public:
     bool isValid(string s) {
+        
         stack<char> stack;
         for (int i = 0; i < s.length(); i++) {
             if (s.at(i) == '(') {
@@ -19,6 +20,7 @@ public:
                 stack.pop();
             }
         }
+        
         return stack.empty();
     }
 };
