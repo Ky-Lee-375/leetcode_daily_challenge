@@ -19,10 +19,11 @@ class FileSystem:
         
 
     def get(self, path: str) -> int:
-        if path in self.paths:
-            return self.paths[path]
-        else:
-            return -1
+        return self.paths.get(path, -1)
+        # if path in self.paths:
+        #     return self.paths[path]
+        # else:
+        #     return -1
         
         
 
