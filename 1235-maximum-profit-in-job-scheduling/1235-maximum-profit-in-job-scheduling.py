@@ -1,29 +1,27 @@
 class Solution:
     def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
-        # zip the values and sort by startTime
+        # zip the value
+        # sort the data
         intervals = sorted(zip(startTime, endTime, profit))
-        
-        # cache
         cache = {}
         
-        # dfs
+        # recursive dfs
         def dfs(i):
-            # base case: last job 
-            if i == len(intervals):
+            if len(intervals) == i:
                 return 0
+            # check cache
             if i in cache:
                 return cache[i]
-                
-            # Don't include
+        # compare not include vs include -> find max
+            # not include
             res = dfs(i+1)
             
-            # Include
-                # binary search to find the next start time
-            j = bisect.bisect(intervals, (intervals[i][1], -1, -1))
-            cache[i] = res = max(res, intervals[i][2] +dfs(j))
+            # include
+            # find the next start time
+            next_job = bisect.bisect(intervals, (intervals[i][1], -1, -1))
+            cache[i] = res = max(res, intervals[i][2] + dfs(next_job))
             return res
-        
-        # return max profit
+        # call dfs on the first one
         return dfs(0)
       
             
