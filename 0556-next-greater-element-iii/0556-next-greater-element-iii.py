@@ -20,6 +20,7 @@ class Solution:
         s_list[idx], s_list[j] = s_list[j], s_list[idx]
         s_list[idx+1:] = reversed(s_list[idx+1:])
         
+        # *** .join is required to convert back to string ***
         ans = ''.join(s_list)
         return int(ans) if int(ans) < 2**31 else -1
         
