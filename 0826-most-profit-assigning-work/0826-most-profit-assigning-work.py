@@ -1,25 +1,17 @@
 class Solution:
     def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
-        # base case check
-            # min diff > max worker
-            # return 0
+        # edge case
         if min(difficulty) > max(worker):
             return 0
-        # zip diff and profit
         jobs = sorted(zip(difficulty, profit))
         
-        best = max_profit = j_idx = 0
-        for w in sorted(worker):
-            while j_idx < len(jobs)  and w >= jobs[j_idx][0]:
-                best = max(best, jobs[j_idx][1])
-                # print("best " + str(best))
-                j_idx += 1
-            max_profit += best
-            # print(max_profit)
+        worker = sorted(worker)
+        max_profit = curr_prof = j = 0
+
+        
+        for i in range(len(worker)):
+            while j < len(jobs) and jobs[j][0] <= worker[i]:
+                curr_prof = max(curr_prof, jobs[j][1])
+                j += 1
+            max_profit += curr_prof
         return max_profit
-        # search max lowest val for each worker
-            # binary search
-            # add profit to total profit
-        # return profit
-        
-        
