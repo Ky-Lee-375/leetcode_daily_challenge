@@ -5,27 +5,28 @@ class FileSystem:
         
 
     def createPath(self, path: str, value: int) -> bool:
-        # check if path already exists
-        if not path or not value or path in self.paths:
-            return False
+        # check if it already exists
+        if path in self.paths:
         # if so, return false
-        
-        dash_idx = path.rfind('/')
-        # find the last occurence of /
-        # if everything before doesn't exist-> return false
-        if path[:dash_idx] not in self.paths and len(path[:dash_idx]) > 1:
             return False
-        # if exists, add the new item
+        
+        idx = path.rfind("/")
+        # find the up until last /
+        parent = path[:idx]
+        if parent not in self.paths and len(parent) > 1:
+        # if that X exist in path and it's greater than 1
+            return False
+        # return false
+        
+        # otherwise, add a new path
         self.paths[path] = value
         return True
-        
+
 
     def get(self, path: str) -> int:
-        if path in self.paths:
-            return self.paths[path]
-        else:
-            return -1
+        return self.paths[path] if path in self.paths else -1
         
+
         
         
 
