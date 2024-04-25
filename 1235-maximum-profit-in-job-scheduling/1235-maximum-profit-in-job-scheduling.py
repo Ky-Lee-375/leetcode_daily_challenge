@@ -1,28 +1,34 @@
 class Solution:
     def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
-        # zip the value
-        # sort the data
+        # zip the input
+        # sort by start time O(n logn)
         intervals = sorted(zip(startTime, endTime, profit))
+        # intervals.sort(key = lambda x:x[0])
         cache = {}
         
-        # recursive dfs
-        def dfs(i):
-            if len(intervals) == i:
+        # cache
+        
+        # dfs(idx) + binary search 
+        # find the next start time using the end time of current job
+        # 1. include
+        # 2. not include
+        # keep track of max
+        def dfs(idx):
+            profit = 0
+            if idx == len(intervals):
                 return 0
-            # check cache
-            if i in cache:
-                return cache[i]
-        # compare not include vs include -> find max
-            # not include
-            res = dfs(i+1)
+            if idx in cache:
+                return cache[idx]
             
-            # include
+            # don't take
+            # call dfs on next
+            profit = dfs(idx+1)
+
+            # take
             # find the next start time
-            next_job = bisect.bisect(intervals, (intervals[i][1], -1, -1))
-            cache[i] = res = max(res, intervals[i][2] + dfs(next_job))
-            return res
-        # call dfs on the first one
+            next_j = bisect.bisect(intervals, (intervals[idx][1], -1, -1))
+            cache[idx] = profit = max(profit, intervals[idx][2] + dfs(next_j))
+            return profit
+        
         return dfs(0)
-      
-            
-            
+        
