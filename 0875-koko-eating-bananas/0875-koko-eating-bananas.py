@@ -1,18 +1,19 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        left =1
-        right = max(piles)
         # binary search
-        while left < right:
-            mid = (left+right) // 2
-            hours = 0
-            for banana in piles:
-                hours += math.ceil(banana / mid)
+        l, r = 1, max(piles)
+        while l < r:
+            middle = (l + r) // 2
             
-            # get the max from the pile
-            # start w the middle val
-            if hours <= h:
-                right = mid
+            hour_spent = 0
+            for pile in piles:
+                hour_spent += math.ceil(pile/middle)
+                
+            if hour_spent <= h:
+                r = middle
             else:
-                left = mid +1
-        return right
+                l = middle +1
+        return r
+                
+                
+        
