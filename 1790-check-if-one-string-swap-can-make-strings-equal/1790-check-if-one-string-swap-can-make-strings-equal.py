@@ -1,15 +1,14 @@
 class Solution:
     def areAlmostEqual(self, s1: str, s2: str) -> bool:
-        if len(s1) != len(s2):
-            return False
-        stack = []
-        for i in range(len(s1)):
-            if s1[i] != s2[i]:
-                stack.append((s1[i], s2[i]))
-        if len(stack) > 2 or len(stack) == 1:
-            return False
-        if len(stack) == 0:
+        n = len(s1)
+        if s1 == s2:
             return True
-        return (stack[0][1] == stack[1][0]) and (stack[0][0] == stack[1][1])
         
+        swap = []
+        for i in range(n):
+            if s1[i] != s2[i]:
+                swap.append((s1[i], s2[i]))
+        if len(swap) < 2:
+            return False
+        return len(swap) == 2 and swap[0][0] == swap[1][1] and swap[0][1] == swap[1][0]
         
