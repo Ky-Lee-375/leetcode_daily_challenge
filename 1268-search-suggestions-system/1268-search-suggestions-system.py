@@ -1,28 +1,31 @@
 class Solution:
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
-        # sort products -> lexicographical
-        products.sort()
-        
-        # use two pointers l and r
-        l, r = 0, len(products) -1
-        
-        # final list
+        # declare res array
         res = []
-        # move l and r as it doesnt match w prefix
+        
+        # maintain two pointers
+        # left, right
+        left, right = 0, len(products)-1
+        
+        # sort the array
+        products = sorted(products)
+        
+        # go through letter in searchWord
+        # if it matches
+        # add first three or min (right - left +1)
+        # apped to the res
         for i in range(len(searchWord)):
             c = searchWord[i]
-            # while for moving l
-            while l <= r and (len(products[l]) <= i or products[l][i] != c):
-                l += 1
-            # while for moving r
-            while l <= r and (len(products[r]) <= i or products[r][i] != c):
-                r -= 1
+            while left <= right and (len(products[left]) <= i or c != products[left][i]):
+                left += 1
+            while left <= right and (len(products[right]) <= i or c != products[right][i]):
+                right -= 1
+            
             res.append([])
-        # if it does match, add to the final list
-            # add first three, if less, add all
-            remain = r -l +1
-            j = min(remain, 3)
-            for k in range(j):
-                res[-1].append(products[l+k])
-        # return a list of lists
+            remain = min(3, right-left+1)
+            for j in range(remain):
+                res[-1].append(products[left+j])
+            
         return res
+        # return res
+        
