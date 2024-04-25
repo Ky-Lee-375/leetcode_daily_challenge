@@ -8,34 +8,40 @@ class Interval:
 
 class Solution:
     def employeeFreeTime(self, schedule: '[[Interval]]') -> '[Interval]':
-        intervalsArray = []
+        intervals = []
+        # put data in a list form -> easy to handle and modify
         for employee in schedule:
-            for workTime in employee:
-                start = workTime.start
-                end = workTime.end
-                intervalsArray.append([start,end])
-        intervalsArray.sort(key = lambda x :x[0])
+            for worktime in employee:
+                start_ = worktime.start
+                end_ = worktime.end
+                intervals.append([start_, end_])
+        # sort the interval array
+        intervals.sort(key = lambda x:x[0])
         
-        mergedArray = [intervalsArray[0]]
-        for idx in range(1, len(intervalsArray)):
-            prevWork = mergedArray[-1]
-            currWork = intervalsArray[idx]
+        merged = [intervals[0]]
+        # go through it and see if we can merge
+        # merged list
+        for i in range(1, len(intervals)):
+            prev = merged[-1]
+            curr = intervals[i]
             
-            if currWork[0] <= prevWork[1]:
-                start = prevWork[0]
-                end = max(prevWork[1], currWork[1])
-                mergedArray[-1] = [start,end]
+            if curr[0] <= prev[1]:
+                # we merge it
+                merged[-1] = [prev[0], max(prev[1], curr[1])]
             else:
-                mergedArray.append(currWork)
+                merged.append(curr)
+        # go through merged list
+        # append the gap bwt every interval
+        if len(merged) <= 1:
+            return []
+        res = []
+        for i in range(len(merged)-1):
+            res.append(Interval(merged[i][1], merged[i+1][0]))
+        return res
         
-        result = []
-        if len(mergedArray) <=1:
-            return result
-        
-        for i in range(len(mergedArray) -1):
-            start = mergedArray[i][1]
-            end = mergedArray[i+1][0]
-            result.append(Interval(start,end))
-        
-        return result
-        
+    
+    
+    
+
+# O(n log N)
+    
