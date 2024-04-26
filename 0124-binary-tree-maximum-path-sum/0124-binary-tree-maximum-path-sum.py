@@ -10,7 +10,8 @@ class Solution:
         # when root is none -> return -inf
         if root == None:
             return float('-inf')
-         
+        
+        # consider the negative values
         res = float('-inf')
         # recursively find the max
         def dfs_max(node):
@@ -19,6 +20,7 @@ class Solution:
             if node == None:
                 return 0
             # get the right tree
+            # compare with 0?
             right = max(0, dfs_max(node.right))
             left = max(0, dfs_max(node.left))
             
