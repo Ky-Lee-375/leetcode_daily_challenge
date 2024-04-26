@@ -1,21 +1,28 @@
 class Solution:
     def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
-        # binary search
-        # find the target number
+        # edge case:
         if len(arr) == k:
             return arr
-        n = len(arr)
+        
+        # binary search
+        # find the index of the closest occurrence
         idx = bisect.bisect_left(arr, x)
+        # *** left could be -1
         left, right = idx -1, idx
         
+        # two pointers: left and right
+        # while right - left - 1 < k
+        # if |left-x| < |right-x|
+            # increment right
         while right - left -1 < k:
             if left == -1:
                 right += 1
                 continue
-            if right == n or (left>=0 and abs(arr[left] - x) <= abs(arr[right]-x)):
-                # left is closer to x than right
-                left -= 1
+            if right == len(arr) or (left >=0 and abs(arr[left]-x) <= abs(arr[right]-x)):
+                left -=1
             else:
                 right += 1
-        print(left, right)
+            
+        # slice from left to right
+        # return that array
         return arr[left+1:right]
