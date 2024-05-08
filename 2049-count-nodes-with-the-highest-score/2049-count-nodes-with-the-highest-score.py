@@ -1,30 +1,26 @@
 class Solution:
-    def countHighestScoreNodes(self, parents: List[int]) -> int:            
-        # construct a graph
+    def countHighestScoreNodes(self, parents: List[int]) -> int:
+        # create a graph first
         graph = collections.defaultdict(set)
         for node, parent in enumerate(parents):
             graph[parent].add(node)
-        # dictionary for a counter
+        
         d = collections.Counter()
-        n = len(parents)
-        # DFS: Iterate over a graph
+        # dfs
+        # find the leaf node
+        # sum counter, product 
         def dfs(node):
-        # delete one node at a time
-            product, total = 1, 0
-            # count children of each node
+            product, counter = 1,0
             for child in graph[node]:
                 res = dfs(child)
                 product *= res
-                total += res
-            product *= max(1, n -1 - total)
+                counter += res
+            # compute the score
+            product *= max(1, len(parents)-counter-1)
             d[product] += 1
-            
-            return total +1
-            # count connected component
-            # increment in dictionary
-            # return num elemen in the CC
+            return counter +1
         
-        # Call DFS
         dfs(0)
-        # return max of the counter
         return d[max(d.keys())]
+        
+        # result counter dict
