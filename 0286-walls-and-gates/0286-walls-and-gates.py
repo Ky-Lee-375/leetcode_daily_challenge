@@ -3,36 +3,35 @@ class Solution:
         """
         Do not return anything, modify rooms in-place instead.
         """
-        # initialize variables
-        # row, col, direction, queue
-        ROWS, COLS = len(rooms), len(rooms[0])
+        rows, cols = len(rooms), len(rooms[0])
         directions = [(0,1), (0,-1), (1,0), (-1,0)]
-        q = deque()
         visit = set()
+        q = deque()
         
         # add gates to queue
-        for r in range(ROWS):
-            for c in range(COLS):
+        for r in range(rows):
+            for c in range(cols):
                 if rooms[r][c] == 0:
-                    q.append((r,c))
                     visit.add((r,c))
-
-        # while queue exists
-        # bfs with queue
-        # pop the item and call bfs recursive
-        # increment dist after poping everything in the same level
+                    q.append((r,c))
+        
+        # BFS
+        # invoke BFS from every gate
+        # add to queue
+        # for the length of queue, recursive call
+        # increment the dist
         dist = 0
         while q:
             for i in range(len(q)):
                 r, c = q.popleft()
                 rooms[r][c] = dist
+                
                 for d in directions:
-                    next_r, next_c = r+d[0], c + d[1]
-                    if 0<=next_r< ROWS and 0<=next_c< COLS and rooms[next_r][next_c] != -1 and (next_r, next_c) not in visit:
-                        q.append((next_r, next_c))
-                        visit.add((next_r, next_c))
+                    next_row, next_col = r + d[0], c + d[1]
+                    if (0 <= next_row < rows) and (0 <= next_col < cols) and (next_row, next_col) not in visit and rooms[next_row][next_col] != -1:
+                        visit.add((next_row, next_col))
+                        q.append((next_row, next_col))
             dist += 1
-                            
-                        
-        
+    
+            
         
