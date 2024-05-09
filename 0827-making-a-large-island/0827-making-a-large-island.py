@@ -1,61 +1,42 @@
 class Solution:
     def largestIsland(self, grid: List[List[int]]) -> int:
+        self.island_id = -1
+        self.island_areas = {}
+        
+        self.directions = [(0,1), (0,-1), (1,0), (-1,0)]
         ROWS, COLS = len(grid), len(grid[0])
-        directions = [(0,1), (0,-1), (1,0), (-1,0)]
-        
-        island_area = {}
-        island_id = 2
-        visit = set()
-        
-        # give island id
-        # dfs to find island area
-        def dfs(r,c):
-            area = 0
-            stack = [(r,c)]
-            while stack:
-                r,c = stack.pop()
-                if (r,c) in visit:
-                    continue
-                visit.add((r,c))
-                
-                area += 1
-                grid[r][c]  = island_id
-                
-                for d in directions:
-                    next_r, next_c = r + d[0], c + d[1]
-                    if (0 <= next_r <ROWS) and (0 <= next_c <COLS) and grid[next_r][next_c] == 1:
-                        area += dfs(next_r, next_c)
-                        stack.append((next_r,next_c))
-            return area
-        
-        # save it in dict
         for r in range(ROWS):
             for c in range(COLS):
                 if grid[r][c] == 1:
-                    size = dfs(r,c)
-                    island_area[island_id] = size
-                    island_id += 2
-                    
-        max_size = max(island_area.values(), default=0)
-        
-        # go through the grid
-        # find surr island
-        # add to set
-        # sum the negiboring island area
+                    island_area = self.dfs(grid, r,c)
+                    self.island_areas[self.island_id] = island_area
+                    self.island_id -= 1
+        max_area = 0
         
         for r in range(ROWS):
             for c in range(COLS):
-                # find the empty land
-                if grid[r][c] == 0:
+                if not grid[r][c]:
                     area = 1
                     surr = set()
-                    for d in directions:
+                    for d in self.directions:
                         next_r, next_c = r + d[0], c + d[1]
-                        if (0 <= next_r < ROWS) and (0 <= next_c < COLS) and grid[next_r][next_c] > 1:
+                        if (0<= next_r <ROWS) and (0 <= next_c < COLS) and grid[next_r][next_c] != 0:
                             surr.add(grid[next_r][next_c])
-                    for s in surr:
-                        area += island_area[s]
-                    max_size = max(max_size, area)
-        return max_size
+                    for island_id in surr:
+                        area += self.island_areas[island_id]
+                    
+                    max_area = max(max_area, area)
+        return max_area if max_area else len(grid)**2
         
-        # find the max sum
+    def dfs(self, grid, r, c):
+        ROWS, COLS = len(grid), len(grid[0])
+        if (0 <= r < ROWS) and (0 <= c < COLS) and grid[r][c] == 1:
+            grid[r][c] = self.island_id
+            area = 1
+            for d in self.directions:
+                next_r, next_c = r + d[0], c + d[1]
+                area += self.dfs(grid, next_r, next_c)
+            return area
+        else:
+            return 0
+            
