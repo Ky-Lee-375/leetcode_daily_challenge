@@ -1,26 +1,23 @@
 class Solution:
     def countHighestScoreNodes(self, parents: List[int]) -> int:
-        # create a graph first
-        graph = collections.defaultdict(set)
+        # construct a graph
+        graph = collections.defaultdict(list)
         for node, parent in enumerate(parents):
-            graph[parent].add(node)
-        
+            graph[parent].append(node)
         d = collections.Counter()
+        n = len(parents)
         # dfs
-        # find the leaf node
-        # sum counter, product 
+        # find the score from the leaf
         def dfs(node):
-            product, counter = 1,0
+            total, product = 0, 1
             for child in graph[node]:
                 res = dfs(child)
+                total += res
                 product *= res
-                counter += res
-            # compute the score
-            product *= max(1, len(parents)-counter-1)
+            
+            product *= max(1, n-total-1)
             d[product] += 1
-            return counter +1
+            return total +1
         
         dfs(0)
         return d[max(d.keys())]
-        
-        # result counter dict
