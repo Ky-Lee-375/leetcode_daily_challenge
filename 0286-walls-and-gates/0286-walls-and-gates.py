@@ -3,35 +3,52 @@ class Solution:
         """
         Do not return anything, modify rooms in-place instead.
         """
-        rows, cols = len(rooms), len(rooms[0])
-        directions = [(0,1), (0,-1), (1,0), (-1,0)]
+        # BFS + Queue
+        # invoke BFS simultaneously
+    
+        # variable
+        # ROW, COL
+        # direction
+        ROWS, COLS = len(rooms), len(rooms[0])
+        directions = [(0,1), (0,-1), (-1,0), (1,0)]
         visit = set()
         q = deque()
         
-        # add gates to queue
-        for r in range(rows):
-            for c in range(cols):
+        # go through the rooms
+        # add all buildings (== 0)
+        for r in range(ROWS):
+            for c in range(COLS):
                 if rooms[r][c] == 0:
                     visit.add((r,c))
                     q.append((r,c))
         
-        # BFS
-        # invoke BFS from every gate
-        # add to queue
-        # for the length of queue, recursive call
+        # while queue
+        # len of queue
+            # add dist to grid
         # increment the dist
         dist = 0
         while q:
             for i in range(len(q)):
-                r, c = q.popleft()
+                r,c = q.popleft()
                 rooms[r][c] = dist
-                
                 for d in directions:
-                    next_row, next_col = r + d[0], c + d[1]
-                    if (0 <= next_row < rows) and (0 <= next_col < cols) and (next_row, next_col) not in visit and rooms[next_row][next_col] != -1:
-                        visit.add((next_row, next_col))
-                        q.append((next_row, next_col))
+                    next_r, next_c = r + d[0], c + d[1]
+                    if (0 <= next_r <ROWS) and (0 <= next_c <COLS) and (next_r, next_c) not in visit and rooms[next_r][next_c] != -1:
+                        visit.add((next_r, next_c))
+                        q.append((next_r,next_c))
             dist += 1
-    
-            
-        
+                    
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
