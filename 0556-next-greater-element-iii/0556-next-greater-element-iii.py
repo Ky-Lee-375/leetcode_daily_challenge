@@ -1,29 +1,33 @@
 class Solution:
     def nextGreaterElement(self, n: int) -> int:
-        size = len(str(n))
-        idx = size -2
-        n_arr = [c for c in str(n)]
+        # convert to string
+        s = str(n)
+        # convert to list
+        s_list = [c for c in s]
+        size = len(s_list)
         
+        # no next greater
         if size == 1:
             return -1
         
-        while idx >= 0 and n_arr[idx] >= n_arr[idx+1]:
+        # find the first non increasing point
+        idx = size -2
+        while idx >= 0 and s_list[idx] >= s_list[idx+1]:
             idx -= 1
-        
-        if idx < 0:
+        if idx == -1:
             return -1
-        
+                
+        # find the next largest
         j = size -1
-        while n_arr[idx] >= n_arr[j]:
-            j -=1
-        n_arr[idx], n_arr[j] = n_arr[j], n_arr[idx]
-        n_arr[idx+1:] = reversed(n_arr[idx+1:])
+        while s_list[j] <= s_list[idx]:
+            j -= 1
+
+        # swap
+        s_list[idx], s_list[j] = s_list[j], s_list[idx]
+        # reverse the rest increasing order
+        s_list[idx+1:] = reversed(s_list[idx+1:])
         
-        res = ''.join(n_arr)
-        return int(res) if int(res) < 2**31 else -1
-        
-        # start from the back
-        # find the first decreasing point
-        # swap with next greates
-        # sort the rest
-        
+        ans = ''.join(s_list)
+        # return int
+        # chck if it's 32 bit int
+        return int(ans) if int(ans) < 2**31 else -1
