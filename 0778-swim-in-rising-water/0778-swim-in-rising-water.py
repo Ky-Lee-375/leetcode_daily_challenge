@@ -32,7 +32,11 @@ class Solution:
                     heapq.heappush(minH, [max(t, grid[next_r][next_c]), next_r, next_c])
                 
                 
-                
+# space O(rowxcol)
+# time
+    # heap operation: log (mxn)
+    # traversal: worst case mxn
+    # O(mn log mn)
                 
                 
                 
