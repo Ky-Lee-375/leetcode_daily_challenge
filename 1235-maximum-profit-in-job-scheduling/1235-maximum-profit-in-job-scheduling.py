@@ -1,29 +1,25 @@
 class Solution:
     def jobScheduling(self, startTime: List[int], endTime: List[int], profit: List[int]) -> int:
-        # sort & zip
+        # zip the variable
         intervals = sorted(zip(startTime, endTime, profit))
-        # cache / memoization
+        # cache
         cache = {}
-        profit = 0
         
-        # dfs
+        # dfs + binary search
+            # don't take
+            # move to the next
+            # take -> find the next start
         def dfs(i):
-        # keep track of max profit
             if i == len(intervals):
                 return 0
             if i in cache:
                 return cache[i]
-
-            # Don't take -> take the next
-            profit = dfs(i+1)
             
-            # take -> find the next starting using binary search
-            next_idx = bisect.bisect(intervals, (intervals[i][1], -1, -1))
-            # call bfs on the next item
+            res = dfs(i+1)
             
-            cache[i] = profit = max(profit, intervals[i][2] + dfs(next_idx))
-            return profit
+            next_j = bisect.bisect_left(intervals, (intervals[i][1], -1,-1))
+            cache[i] = res = max(res, intervals[i][2] + dfs(next_j))
+            return res
         
+        # return max
         return dfs(0)
-                    
-        
