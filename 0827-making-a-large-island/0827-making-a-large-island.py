@@ -29,7 +29,7 @@ class Solution:
                             surr.add(grid[next_r][next_c])
                     for s_id in surr:
                         area += self.island_area[s_id]
-                    max_area = max(max_area, area) 
+                max_area = max(max_area, area) 
         return max_area if max_area else len(grid)**2
         
         
