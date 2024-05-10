@@ -1,7 +1,7 @@
 class Solution:
     def shipWithinDays(self, weights: List[int], days: int) -> int:
         left, right = max(weights), sum(weights)
-        res = float('inf')
+        res = right
         def canShip(cap):
             ships, currCap = 1, cap
             for w in weights:
