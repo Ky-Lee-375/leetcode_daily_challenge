@@ -14,20 +14,19 @@ class Codec:
         :rtype: str
         """
         tree = []
+        # dfs inorder traversal
+
         def dfs(node):
-        # creates a list of str
-            if not node:
+            if node == None:
                 tree.append("N")
-                return
-            # convert int to str
+                return 
             tree.append(str(node.val))
-            # append to the list in order
             dfs(node.left)
             dfs(node.right)
-            return tree
         dfs(root)
         return ",".join(tree)
-
+        
+                    
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
@@ -35,32 +34,31 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        # from a comma separated list to tree
-        # split
-        nodes = data.split(',')
+        nodes = data.split(",")
         self.i = 0
         
         def dfs():
-        # iterate through the list
-        # dfs
             if nodes[self.i] == "N":
                 self.i += 1
                 return None
-        # is none -> return none
             node = TreeNode(int(nodes[self.i]))
             self.i += 1
             node.left = dfs()
             node.right = dfs()
             return node
-        root = dfs()
-        return root
-        # add left first then right
+        return dfs()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
 # deser = Codec()
 # ans = deser.deserialize(ser.serialize(root))
-
-
-# DFS Preorder
-# left -> right
