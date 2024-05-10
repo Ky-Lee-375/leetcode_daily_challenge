@@ -1,16 +1,14 @@
 class Solution:
     def countOrders(self, n: int) -> int:
-        # total = 2*n
-        # choice for each pair: x(x-1)/2
-        
-        slots = 2*n
-        res = 1
-        while (slots > 0):
-            choice = slots*(slots-1) //2
-            res *= choice
-            slots -=2
-        
-        return res % (10**9 +7)
-        
-     
-        
+        # total
+        # 2*n
+        total = 2*n
+        # while n exists
+        # for each slot: n (n-1) //2 
+        # return modulo
+        ans = 1
+        while total > 0:
+            choices = total * (total-1) //2
+            ans *= choices
+            total -=2
+        return ans % (10**9 + 7)
