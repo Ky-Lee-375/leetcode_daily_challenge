@@ -1,26 +1,23 @@
 class Solution:
     def asteroidCollision(self, asteroids: List[int]) -> List[int]:
         # stack
-        # neg: left, pos: right
         stack = []
+    
+        # if neg after pos -> find diff
+        # if neg -> neg win
+        # if pos -> pos win
+        # if 0 -> pop both
         
         for a in asteroids:
-            # while stack exist
-            # current is neg and last of stack is postive
-            # collision happen
-            while stack and a <0 and stack[-1] > 0:
-                diff = a + (stack[-1])
-                # if sum is neg: keep neg
+            while stack and a < 0 and stack[-1] > 0:
+                diff = stack[-1] + a
                 if diff < 0:
                     stack.pop()
-                # if sum is pos: keep pos
                 elif diff > 0:
-                    a = 0
-                # is sum is 0: pop both
+                    a =0
                 else:
                     a = 0
                     stack.pop()
             if a != 0:
                 stack.append(a)
         return stack
-            
